@@ -17,6 +17,6 @@ spec:
   endpoints:
     - port: http-metrics
       path: /metrics
-      interval: 30s
-      scrapeTimeout: 10s
+      interval: {{ .Values.serviceMonitor.interval | quote }}
+      scrapeTimeout: {{ .Values.serviceMonitor.scrapeTimeout | quote }}
       honorLabels: true

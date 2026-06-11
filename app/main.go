@@ -43,6 +43,8 @@ func main() {
 	}
 
 	log.Printf("Demo app listening on %s", port)
+	// TLS is terminated by the Kubernetes ingress or the external DAST target.
+	// nosemgrep: go.lang.security.audit.net.use-tls.use-tls
 	if err := http.ListenAndServe(":"+port, mux); err != nil {
 		log.Fatal(err)
 	}

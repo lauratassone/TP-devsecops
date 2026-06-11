@@ -17,6 +17,7 @@ Ce depot livre un TP complet pour deployer Harbor sur k3s avec Terraform et secu
 ├── app/                         # Application de demonstration pour CI/CD
 ├── terraform/                   # Root Terraform + module Helm Harbor
 ├── monitoring/                  # Dashboard Grafana Harbor
+├── scripts/                     # Scripts locaux de verification
 ├── .github/workflows/ci.yml     # Pipeline securisee
 ├── .checkov.yml                 # Configuration Checkov
 ├── .semgrepignore               # Exclusions Semgrep
@@ -30,8 +31,15 @@ Ce depot livre un TP complet pour deployer Harbor sur k3s avec Terraform et secu
 - `terraform >= 1.6`.
 - `helm >= 3`.
 - `kubectl`.
+- `docker` pour tester l'image de demonstration.
 - Optionnel pour les controles locaux : `tflint`, `checkov`, `hadolint`, `trivy`, `semgrep`, `cosign`.
 - Prometheus Operator deja installe si vous voulez que le `ServiceMonitor` soit pris en compte.
+
+Sur macOS avec Homebrew :
+
+```bash
+brew install terraform kubectl helm tflint checkov hadolint trivy semgrep cosign
+```
 
 ## Deploiement Harbor
 
@@ -91,6 +99,8 @@ La pipeline `.github/workflows/ci.yml` execute :
 6. Signature Cosign keyless de l'image poussee.
 7. DAST OWASP ZAP baseline sur l'URL cible.
 
+Les checks Hadolint/Terraform/Semgrep/Trivy tournent toujours. Les etapes push Harbor et Cosign s'activent quand `HARBOR_REGISTRY` est configure dans les variables GitHub et que le runner peut joindre cette registry.
+
 ## Observabilite
 
 Le chart Harbor expose les metriques via `metrics.enabled=true`.
@@ -105,6 +115,14 @@ Le dashboard suit notamment :
 - etat des jobs Harbor ;
 - activite registry HTTP ;
 - indicateurs lies aux scans d'artefacts et CVE quand les metriques Harbor/Trivy Adapter sont disponibles.
+
+## Verification locale
+
+```bash
+./scripts/verify-local.sh
+```
+
+Le script lance les validations Terraform et tous les outils de scan disponibles localement.
 
 ## Rendu
 
