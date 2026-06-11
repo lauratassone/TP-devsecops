@@ -1,0 +1,5 @@
+harbor_admin_password = "ChangeMe-Use-A-Secret-Value"
+harbor_host           = "harbor.local"
+exposure_type         = "clusterIP"
+exposure_tls_enabled  = false
+storage_class_name    = "local-path"

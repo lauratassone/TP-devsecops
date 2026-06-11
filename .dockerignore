@@ -1,0 +1,7 @@
+.git
+.github
+terraform
+monitoring
+docs
+node_modules
+*.md

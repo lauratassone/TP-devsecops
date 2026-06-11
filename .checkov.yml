@@ -1,0 +1,9 @@
+framework:
+  - terraform
+download-external-modules: false
+quiet: true
+compact: true
+skip-check:
+  # CKV_K8S_21/22 are enforced on workload manifests; this TP delegates Harbor pods to the upstream Helm chart.
+  - CKV_K8S_21
+  - CKV_K8S_22

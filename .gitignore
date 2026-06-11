@@ -1,0 +1,10 @@
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
+terraform/terraform.tfvars
+zap-report.html
+zap-report.json
+trivy-report.sarif
+node_modules/
+.DS_Store

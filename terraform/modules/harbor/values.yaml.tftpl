@@ -1,0 +1,60 @@
+expose:
+  type: ${exposure_type}
+  tls:
+    enabled: ${tls_enabled}
+  ingress:
+    hosts:
+      core: ${harbor_host}
+    className: traefik
+
+externalURL: ${jsonencode("${tls_enabled ? "https" : "http"}://${harbor_host}")}
+
+persistence:
+  enabled: true
+  persistentVolumeClaim:
+    registry:
+      storageClass: ${storage_class_name}
+      size: 10Gi
+    jobservice:
+      jobLog:
+        storageClass: ${storage_class_name}
+        size: 1Gi
+    database:
+      storageClass: ${storage_class_name}
+      size: 2Gi
+    redis:
+      storageClass: ${storage_class_name}
+      size: 1Gi
+    trivy:
+      storageClass: ${storage_class_name}
+      size: 5Gi
+
+metrics:
+  enabled: true
+  core:
+    path: /metrics
+    port: 8001
+  registry:
+    path: /metrics
+    port: 8001
+  jobservice:
+    path: /metrics
+    port: 8001
+  exporter:
+    path: /metrics
+    port: 8001
+
+trivy:
+  enabled: true
+  ignoreUnfixed: false
+  vulnType: "os,library"
+  severity: "UNKNOWN,LOW,MEDIUM,HIGH,CRITICAL"
+
+notary:
+  enabled: false
+
+cache:
+  enabled: true
+  expireHours: 24
+
+logLevel: info
